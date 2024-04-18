@@ -1,0 +1,38 @@
+###
+GET {{host}}/liveness
+
+###
+GET {{host}}/readiness
+
+###
+GET {{host}}/version
+
+###
+POST {{host}}/echo
+Content-Type: application/json
+
+{
+    "echo": {
+        "id": 1,
+        "title": "echo title"
+    }
+}
+
+###
+GET {{host}}/echo
+
+###
+GET {{host}}/echo/1
+
+###
+PUT {{host}}/echo/1
+Content-Type: application/json
+
+{
+    "echo": {
+        "title": "updated title"
+    }
+}
+
+###
+DELETE {{host}}/echo/1

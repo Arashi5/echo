@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package lenvendo.service;
+
+option go_package = "github.com/arashi5/module/api";
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MethodOptions {
+    // WebSocket метод
+    WebSocketOptions ws = 898200;
+}
+
+message WebSocketOptions {
+    // WebSocket path
+    string ws = 1;
+    // Specify input buffer size in bytes
+    int32 readBufferSize = 2;
+    // Specify output buffer size in bytes
+    int32 writeBufferSize = 3;
+    // Allowed origins for ws request
+    // If AllowedOrigins is not specified,then a safe default is used: allowed only origin equals to request Host header.
+    repeated string allowedOrigins = 4;
+}

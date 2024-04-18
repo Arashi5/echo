@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package lenvendo.service;
+
+import "dev/api/service/levels.proto";
+import "dev/api/service/fields.proto";
+import "dev/api/service/ws.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/arashi5/module/api";
+
+extend google.protobuf.ServiceOptions {
+  Levels levels = 898132;
+}
+
+extend google.protobuf.FieldOptions {
+  optional Options options = 898133;
+}

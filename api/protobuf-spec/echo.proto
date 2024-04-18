@@ -1,0 +1,23 @@
+syntax = "proto3";
+package echoexperimentalechoservicepb;
+option go_package = "internal/echoexperimentalechoservicepb";
+
+message Echo {
+  uint32 id = 1;
+  string title = 2;
+  string reminder = 3;
+}
+
+message CreateEchoRequest {
+  Echo data = 1;
+}
+
+message CreateEchoResponse {
+  uint32 id = 1;
+}
+
+message GetEchoListRequest {}
+
+message GetEchoListResponse {
+  repeated Echo echos = 1;
+}

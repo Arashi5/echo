@@ -1,0 +1,23 @@
+syntax = "proto3";
+package echoexperimentalechoservicepb;
+option go_package = "internal/echoexperimentalechoservicepb";
+
+message LivenessRequest {}
+
+message LivenessResponse {
+    string status = 1;
+}
+
+message ReadinessRequest {}
+
+message ReadinessResponse {
+    string status = 1;
+}
+
+message VersionRequest {}
+
+message VersionResponse {
+    string BuildTime = 1;
+    string Commit = 2;
+    string Version = 3;
+}

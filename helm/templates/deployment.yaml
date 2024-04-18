@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.applicationName }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.applicationName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.applicationName  }}
+    spec:
+      containers:
+        - name: {{ .Values.applicationName }}
+          image: {{ .Values.app.yc.image.repository }}:{{.Values.app.yc.image.tag}}
+          imagePullPolicy: {{ .Values.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.app.yc.server.http.port }}
+              name: http
+            - containerPort: {{ .Values.app.yc.server.grpc.port }}
+              name: grpc
+            - containerPort: {{ .Values.app.yc.metrics.port }}
+              name: metrics
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /readiness
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 60
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /liveness
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 60
+          env:
+            - name: "ECHO_SERVER_HTTP_PORT"
+              value: {{ .Values.app.yc.server.http.port | quote }}
+            - name: "ECHO_SERVER_HTTP_TIMEOUT_SEC"
+              value: {{ .Values.app.yc.server.http.timeoutSec | quote }}
+            - name: "ECHO_SERVER_GRPC_PORT"
+              value: {{ .Values.app.yc.server.grpc.port  | quote }}
+            - name: "ECHO_SERVER_GRPC_TIMEOUT_SEC"
+              value: {{ .Values.app.yc.server.grpc.timeoutSec  | quote }}
+
+            - name: "ECHO_DB_POSTGRES_HOST"
+              value: {{ .Values.app.yc.postgresql.host| quote }}
+            - name: "ECHO_DB_POSTGRES_PORT"
+              value: {{ .Values.app.yc.postgresql.port| quote }}
+            - name: "ECHO_DB_POSTGRES_USER"
+              value: {{ .Values.app.yc.postgresql.user| quote }}
+            - name: "ECHO_DB_POSTGRES_PASSWORD"
+              value: {{ .Values.app.yc.postgresql.password| quote }}
+            - name: "ECHO_DB_POSTGRES_DATABASE_NAME"
+              value: {{ .Values.app.yc.postgresql.databaseName  | quote }}
+            - name: "ECHO_DB_POSTGRES_SECURE"
+              value: {{ .Values.app.yc.postgresql.secure  | quote }}
+            - name: "ECHO_DB_POSTGRES_SCHEMA"
+              value: {{ .Values.app.yc.postgresql.schema  | quote }}
+            - name: "ECHO_METRICS_ENABLED"
+              value: {{ .Values.app.yc.metrics.enabled  | quote }}
+            - name: "ECHO_METRICS_PORT"
+              value: {{ .Values.app.yc.metrics.port  | quote }}
+            - name: "ECHO_LOGGER_LEVEL"
+              value: {{ .Values.app.yc.logger.level  | quote }}
+            - name: "ECHO_LOGGER_TIME_FORMAT"
+              value: {{ .Values.app.yc.logger.timeFormat  | quote }}

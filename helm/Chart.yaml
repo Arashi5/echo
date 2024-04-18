@@ -1,0 +1,6 @@
+apiVersion: v2
+name: experimental-echo-service
+description: simple health echo service
+type: application
+version: 0.7.0
+appVersion: "1.16.0"

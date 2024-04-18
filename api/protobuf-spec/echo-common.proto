@@ -1,0 +1,7 @@
+syntax = "proto3";
+package echoexperimentalechoservicepb;
+option go_package = "internal/echoexperimentalechoservicepb";
+
+message ResponseStatus {
+    string status = 1;
+}

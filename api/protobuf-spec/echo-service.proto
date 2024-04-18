@@ -1,0 +1,52 @@
+syntax = "proto3";
+package echoexperimentalechoservicepb;
+option go_package = "internal/echoexperimentalechoservicepb";
+
+import "google/api/annotations.proto";
+import "dev/api/service/annotations.proto";
+import "echo.proto";
+import "echo-health.proto";
+import "echo-common.proto";
+
+// is the interface that provides health methods.
+service HealthService {
+    // returns a error if service doesn`t live.
+    // The kubelet uses liveness probes to know when to restart a Container.
+    rpc Liveness (LivenessRequest) returns (LivenessResponse) {
+        option (google.api.http) = {
+            get: "/liveness"
+        };
+    }
+
+    // returns a error if service doesn`t ready.
+    // Service doesn`t ready by default.
+    // The kubelet uses readiness probes to know when a Container is ready to start accepting traffic.
+    rpc Readiness (ReadinessRequest) returns (ReadinessResponse) {
+        option (google.api.http) = {
+            get: "/readiness"
+        };
+    }
+
+    // returns buid time, last commit and version app
+    rpc Version (VersionRequest) returns (VersionResponse) {
+        option (google.api.http) = {
+            get: "/version"
+        };
+    }
+}
+
+
+service EchoService {
+    // returns buid time, last commit and version app
+    rpc GetEcho (GetEchoListRequest) returns (GetEchoListResponse) {
+        option (google.api.http) = {
+            get: "/echo"
+        };
+    }
+    // returns buid time, last commit and version app
+    rpc CreateEcho (CreateEchoRequest) returns (CreateEchoResponse) {
+        option (google.api.http) = {
+            post: "/echo"
+        };
+    }
+}

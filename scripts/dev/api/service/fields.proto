@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package lenvendo.service;
+
+option go_package = "github.com/arashi5/module/api";
+
+message Options {
+  // Признак обязательного поля
+  optional bool required = 1;
+  // Признак Примера значения поля
+  optional string example = 2;
+  // Признак что поле передаётся в заголовке
+  optional bool in_header = 3;
+  // Название заголовка для поля
+  optional string header_name = 4;
+  // Признак что поле передаётся в куках
+  optional bool in_cookies = 5;
+  // Название для куки
+  optional string cookies_name = 6;
+  // Признак того что поле в теле передаётся
+  optional bool in_body = 7;
+  // Название для json
+  optional string json_name = 8;
+  // Признак того что поле передаётся в урле
+  optional bool in_url = 9;
+  // Название для url
+  optional string url_name = 10;
+}

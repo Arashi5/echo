@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package lenvendo.service;
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/arashi5/module/api";
+
+message Levels {
+  Enabled http    = 1;
+  Enabled grpc    = 2;
+  Enabled logging = 3;
+  Enabled metric  = 4;
+  Enabled sentry  = 5;
+  Enabled tracing = 6;
+  Enabled queue   = 7;
+  Enabled auth    = 8;
+  Enabled ws      = 9;
+}
+
+message Enabled {
+  oneof kind {
+    google.protobuf.NullValue null    = 1;
+    bool                      enabled = 2;
+  }
+}
